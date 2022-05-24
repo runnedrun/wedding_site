@@ -1,4 +1,5 @@
 import { jsonifyTimestamps } from "@/data/fetchHelpers/jsonifyTimestamps"
+import { removeFunctionsFromObj } from "@/data/fetchHelpers/removeFunctions"
 import { RecordParamObs } from "@/data/paramObsBuilders/ParamObsTypeUtils"
 import { Redirect } from "next"
 import { SSRPropsContext } from "next-firebase-auth"
@@ -52,9 +53,10 @@ export const buildPrefetchHandler = <ParamObsType extends RecordParamObs>(
     })
 
     const timestampsJsonified = jsonifyTimestamps(allData)
+    const fnsRemoved = removeFunctionsFromObj(timestampsJsonified)
     return {
       props: {
-        prefetch: timestampsJsonified as InputsAndValuesFromParamObs<ParamObsType>,
+        prefetch: fnsRemoved as InputsAndValuesFromParamObs<ParamObsType>,
         context: {
           host: context.req.headers.host as string,
         },

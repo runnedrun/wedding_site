@@ -1,5 +1,4 @@
 import { objKeys } from "@/helpers/objKeys"
-import { SingleArgObject } from "@/helpers/SingleArgObject"
 import { clone } from "lodash"
 import {
   BehaviorSubject,
@@ -7,21 +6,18 @@ import {
   map,
   pairwise,
   startWith,
-  switchMap,
   tap,
   withLatestFrom,
 } from "rxjs"
 import { ForeignKey } from "../baseTypes/ForeignKey"
-import { Model } from "../baseTypes/Model"
-import { buildParamaterizedObs } from "../builders/buildParamterizedObs"
+
 import { obsToNamedParamObs } from "../builders/obsToNamedParamObs"
 import { creators, setters } from "../fb"
 import { ParamaterizedObservable } from "../ParamaterizedObservable"
 import { combine } from "../paramObsBuilders/combine"
 import { ValueTypeFromParamObs } from "../paramObsBuilders/ParamObsTypeUtils"
-import { staticValue } from "../paramObsBuilders/staticValue"
-import { AllModels, CollectionModels } from "./CollectionModels"
-import { docForKey } from "./docForKey"
+
+import { CollectionModels } from "./CollectionModels"
 
 type KeyError = {
   message: string
@@ -78,11 +74,11 @@ export const fbWriter = <
     }) => void
   } = {}
 ) => {
-  const editinStateSubject = new BehaviorSubject(EditingState.Cancelled)
+  const editingStateSubject = new BehaviorSubject(EditingState.Cancelled)
   const dataToWriteSubject = new BehaviorSubject({} as BaseValueType)
 
   const writeResultsObs = combineLatest([
-    editinStateSubject,
+    editingStateSubject,
     dataToWriteSubject,
   ]).pipe(
     startWith([undefined as EditingState, undefined as BaseValueType] as const),
@@ -178,7 +174,7 @@ export const fbWriter = <
   const allDataAndWriteFunctionsObs = combine({
     baseValue: baseValueObs,
     writeResults: obsToNamedParamObs(writeResultsObs, "writeResults"),
-    editingState: obsToNamedParamObs(editinStateSubject, "editingState"),
+    editingState: obsToNamedParamObs(editingStateSubject, "editingState"),
   }).pipe(
     map(({ baseValue, writeResults, editingState }) => {
       return {
@@ -193,7 +189,7 @@ export const fbWriter = <
         } as ValueTypeFromParamObs<BaseValueParamObs>,
         editingState,
         setEditingState: (editingState: EditingState) => {
-          editinStateSubject.next(editingState)
+          editingStateSubject.next(editingState)
         },
         update(dataToWrite: Partial<BaseValueType>) {
           dataToWriteSubject.next({

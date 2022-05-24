@@ -30,9 +30,9 @@ export const redirectToQueryDestination = ({ ctx }: Props) => {
       destURL = destinationParamVal
     } else {
       // eslint-disable-next-line no-console
-      console.warn(
-        `Redirect destination host must be one of ${allowedHosts.join(", ")}.`
-      )
+      // console.warn(
+      //   `Redirect destination host must be one of ${allowedHosts.join(", ")}.`
+      // )
     }
   }
 

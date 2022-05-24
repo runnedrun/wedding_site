@@ -14,6 +14,7 @@ import {
 import { CollectionModels } from "@/data/firebaseObsBuilders/CollectionModels"
 import { recordDoc } from "@/page_helpers/session_recording/SessionRecorder"
 import { init } from "../initFb"
+import { isUndefined } from "lodash"
 
 type PossibleString = null | string | undefined
 
@@ -34,7 +35,10 @@ export const buildObsForDoc = <
         const docRef = doc(collection(db, collectionName), stringId)
         const convertedDoc = docRef.withConverter(buildConverterForType<M>())
         return docData(convertedDoc, { idField: "uid" }).pipe(
-          map((_) => (typeof _ == "undefined" ? null : _)),
+          map((_) => {
+            const undef = isUndefined(_)
+            return undef ? ({ uid: id } as M) : _
+          }),
           tap((doc) => {
             doc && recordDoc(collectionName, doc)
           })

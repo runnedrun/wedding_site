@@ -59,7 +59,7 @@ export const init = () => {
   })
 
   const storage = getStorage()
-  demoMode && connectFirestoreEmulator(db, "localhost", 8080)
-  demoMode && connectStorageEmulator(storage, "localhost", 9199)
+  demoMode && connectFirestoreEmulator(db, "localhost", 8081)
+  demoMode && connectStorageEmulator(storage, "localhost", 9198)
   return db
 }

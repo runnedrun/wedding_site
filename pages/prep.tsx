@@ -4,7 +4,7 @@ import { Button } from "@/tailwind-components/application_ui/Button"
 import { collection, getFirestore, deleteDoc, doc } from "firebase/firestore"
 import { deleteUser } from "firebase/auth"
 import { getAuth } from "@/data/getAuth"
-import { examplePrep } from "@/prep/examplePrep"
+import { prepRsvps } from "@/prep/prepRsvps"
 
 const deleteCurrentUser = async () => {
   const auth = getAuth()
@@ -48,7 +48,7 @@ const TriggerWithLoading = ({
 const Prep: NextPage = () => {
   return (
     <div>
-      <div>
+      <div className="mb-5 mt-5">
         <TriggerWithLoading
           triggerFn={deleteCurrentUser}
           label="delete current user"
@@ -56,8 +56,8 @@ const Prep: NextPage = () => {
       </div>
       <div>
         <TriggerWithLoading
-          triggerFn={examplePrep}
-          label="example prep"
+          triggerFn={prepRsvps}
+          label="prep rsvp data"
         ></TriggerWithLoading>
       </div>
     </div>

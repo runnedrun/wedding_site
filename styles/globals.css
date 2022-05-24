@@ -1,0 +1,62 @@
+/* ./styles/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Evolve Sans";
+  src: url("/fonts/made_evolve_sans/MADEEvolveSansRegular.otf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Evolve Sans";
+  src: url("/fonts/made_evolve_sans/MADEEvolveSansBold.otf");
+  font-style: bold;
+  font-weight: 500;
+  font-display: swap;
+}
+
+html,
+body,
+#__next {
+  height: 100%;
+}
+
+@media print {
+  html,
+  body {
+    height: auto;
+  }
+  #__next {
+    height: 100%;
+  }
+}
+
+body {
+  font-family: "Evolve Sans";
+}
+
+.break-after {
+  break-after: page;
+}
+
+.a4 {
+  /* original - height: 21cm; */
+  height: 19cm;
+  width: 29.7cm;
+  overflow: hidden;
+  /* margin: 30mm 45mm 30mm 45mm; */
+  /* change the margins as you want them to be. */
+}
+
+.letter-paper {
+  /* original - height: 21cm; */
+  height: 8.5in;
+  width: 11in;
+  overflow: hidden;
+  /* margin: 30mm 45mm 30mm 45mm; */
+  /* change the margins as you want them to be. */
+}

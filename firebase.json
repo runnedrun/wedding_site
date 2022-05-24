@@ -1,0 +1,58 @@
+{
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "functions": {
+    "predeploy": "npm run build-functions",
+    "source": ".",
+    "ignore": [
+      "**/node_modules/**",
+      "**/firestore-debug.log",
+      "**/yarn-error.log",
+      "**/.artifact_output/**",
+      "**/.next/**",
+      "**/.git/**",
+      "**/.storybook/**",
+      "**/.vercel/**",
+      "**/.sentryclirc/**",
+      "**/private_configs/**",
+      "**/actions/**",
+      "**/analytics/**",
+      "**/data_import/**",
+      "**/images/**",
+      "**/env_scripts/**",
+      "**/journeys/**",
+      "**/ngrok/**",
+      "**/pages/**",
+      "**/page_helpers/**",
+      "**/prep/**",
+      "**/private_configs/**",
+      "**/public/**",
+      "**/stories/**",
+      "**/styles/**",
+      "**/tailwind-components/**",
+      "**/views/**"
+    ]
+  },
+  "emulators": {
+    "auth": {
+      "port": 9099
+    },
+    "functions": {
+      "port": 5001
+    },
+    "firestore": {
+      "port": 8080
+    },
+    "storage": {
+      "port": 9199
+    },
+    "ui": {
+      "enabled": true
+    }
+  },
+  "storage": {
+    "rules": "storage.rules"
+  }
+}

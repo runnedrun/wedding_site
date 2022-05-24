@@ -1,0 +1,64 @@
+import { jsonifyTimestamps } from "@/data/fetchHelpers/jsonifyTimestamps"
+import { RecordParamObs } from "@/data/paramObsBuilders/ParamObsTypeUtils"
+import { Redirect } from "next"
+import { SSRPropsContext } from "next-firebase-auth"
+import { buildInitialValuesFromReplay } from "./buildInitialValuesFromReplay"
+import { InputsAndValuesFromParamObs } from "./getInputsAndValuesFromParamObs"
+import { possiblyHandleWarmupRequest } from "./possiblyHandleWarmupRequest"
+import { processSpecialArgs } from "./processSpecialArgs"
+
+export type RequestContext = {
+  host: string
+}
+
+export type PrefetchFnType<ParamObsType extends RecordParamObs> = (
+  ctx: SSRPropsContext
+) => Promise<
+  | {
+      props: {
+        prefetch: InputsAndValuesFromParamObs<ParamObsType>
+        context: RequestContext
+      }
+    }
+  | {
+      redirect: Redirect
+    }
+>
+
+export const buildPrefetchHandler = <ParamObsType extends RecordParamObs>(
+  paramObs: ParamObsType
+): PrefetchFnType<ParamObsType> => {
+  return async (context) => {
+    if (await possiblyHandleWarmupRequest(context.query)) {
+      return {
+        redirect: {
+          destination: "/_warmup",
+          permanent: false,
+        },
+      }
+    }
+
+    const initialValuesFromReplay = buildInitialValuesFromReplay(context.query)
+
+    const processedArgs = processSpecialArgs(paramObs.originalArgs, {
+      query: context.query,
+      props: {},
+      triggeredByContextUpdate: true,
+    })
+
+    const allData = await paramObs.getWithArgs({
+      ...processedArgs,
+      ...initialValuesFromReplay,
+    })
+
+    const timestampsJsonified = jsonifyTimestamps(allData)
+    return {
+      props: {
+        prefetch: timestampsJsonified as InputsAndValuesFromParamObs<ParamObsType>,
+        context: {
+          host: context.req.headers.host as string,
+        },
+      },
+    }
+  }
+}

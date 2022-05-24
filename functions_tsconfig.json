@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "noImplicitReturns": false,
+    "noUnusedLocals": false,
+    "outDir": "functions_lib",
+    "sourceMap": true,
+    "strict": false,
+    "target": "es2017",
+    "baseUrl": ".",
+    "skipLibCheck": true,
+    "paths": {
+      "@/*": ["./*"]
+    },
+    "esModuleInterop": true
+  },
+  "exclude": ["node_modules", "fb_functions/test"],
+  "compileOnSave": true,
+  "files": [
+    "fb_functions/index.ts",
+    "fb_functions/dataMigrations.ts",
+    "fb_functions/loadSession.ts"
+  ]
+}

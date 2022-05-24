@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "noImplicitReturns": true,
+    "noUnusedLocals": false,
+    "outDir": "migrations_lib",
+    "sourceMap": true,
+    "strict": false,
+    "target": "es2017",
+    "baseUrl": ".",
+    "skipLibCheck": true,
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "exclude": ["node_modules"],
+  "compileOnSave": true,
+  "files": ["fb_functions/dataMigrations.ts"]
+}

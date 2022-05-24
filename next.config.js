@@ -1,0 +1,55 @@
+/** @type {import('next').NextConfig} */
+
+const { withSentryConfig } = require("@sentry/nextjs")
+const CircularDependencyPlugin = require("circular-dependency-plugin")
+
+const config = {
+  distDir: "/tmp/.next",
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/sign_in",
+        permanent: true,
+      },
+    ]
+  },
+  reactStrictMode: true,
+  webpack: (config, options) => {
+    config.module.rules.push({
+      test: /\.(csv)$/,
+      loader: "csv-loader",
+      options: {
+        dynamicTyping: true,
+        header: true,
+        skipEmptyLines: true,
+      },
+    })
+
+    return {
+      ...config,
+      plugins: (config.plugins || []).concat([
+        // new CircularDependencyPlugin()
+      ]),
+    }
+  },
+  // swcMinify: true,
+}
+
+console.log("ENV", process.env.NODE_ENV)
+
+const sentryWebpackPluginOptions = {
+  // Additional config options for the Sentry Webpack plugin. Keep in mind that
+  // the following options are set automatically, and overriding them is not
+  // recommended:
+  //   release, url, org, project, authToken, configFile, stripPrefix,
+  //   urlPrefix, include, ignore
+  authToken: process.env.SENTRY_AUTH_TOKEN,
+  silent: true, // Suppresses all logs
+  // For all available options, see:
+  // https://github.com/getsentry/sentry-webpack-plugin#options.
+}
+
+// Make sure adding Sentry options is the last code to run before exporting, to
+// ensure that your source maps include changes from all other Webpack plugins
+module.exports = withSentryConfig(config, sentryWebpackPluginOptions)

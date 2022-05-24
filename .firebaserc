@@ -1,0 +1,9 @@
+{
+  "projects": {
+    "default": "demo-hylite",
+    "staging": "hylite-a6db6",
+    "prod": "hylite-prod",
+    "demo": "demo-hylite"
+  },
+  "targets": {}
+}

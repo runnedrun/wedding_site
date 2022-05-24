@@ -15,9 +15,6 @@ module.exports = {
   plugins: [require("@tailwindcss/forms")],
   theme: {
     extend: {
-      backgroundImage: {
-        banner: "url('../images/Edits-for-Hylites.jpg')",
-      },
       animation: {
         "pulse-once": "pulse 2s linear 1",
       },

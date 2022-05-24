@@ -12,7 +12,7 @@ export const adminView = (
   const checkOrRedirect = (contextWithUser: SSRPropsContext) => {
     const user = contextWithUser.AuthUser
 
-    if (!user?.email?.includes("@hylitepeople.com") && !isDemoMode()) {
+    if (!user?.email?.includes("@xinqing-david.com") && !isDemoMode()) {
       const redirectPath = redirectWithDestination("/sign_in")({ ctx: context })
       return Promise.resolve({
         redirect: {

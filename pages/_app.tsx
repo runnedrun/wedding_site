@@ -17,31 +17,31 @@ const isProd = process.env.NODE_ENV === "production"
 
 // uncomment this to enable Sentry and logrocket error reporting, after configuring both
 // only initialize when in the browser
-// if (typeof window !== "undefined") {
-//   if (isProd) {
-//     LogRocket.init("<your id here>")
-//     LogRocket.getSessionURL((sessionURL) => {
-//       setLogRocketSessionUrl(sessionURL)
-//       Sentry.configureScope((scope) => {
-//         scope.setExtra("sessionURL", sessionURL)
-//       })
-//     })
+if (typeof window !== "undefined") {
+  if (isProd) {
+    LogRocket.init("j1wkwd/wedding")
+    LogRocket.getSessionURL((sessionURL) => {
+      setLogRocketSessionUrl(sessionURL)
+      Sentry.configureScope((scope) => {
+        scope.setExtra("sessionURL", sessionURL)
+      })
+    })
 
-//     Sentry.init({
-//       beforeSend(event) {
-//         const logRocketSession = LogRocket.sessionURL
-//         if (logRocketSession !== null) {
-//           event.extra["LogRocket"] = logRocketSession
-//           return event
-//         } else {
-//           return event
-//         }
-//       },
-//     })
-//   } else {
-//     setLogRocketSessionUrl(null)
-//   }
-// }
+    Sentry.init({
+      beforeSend(event) {
+        const logRocketSession = LogRocket.sessionURL
+        if (logRocketSession !== null) {
+          event.extra["LogRocket"] = logRocketSession
+          return event
+        } else {
+          return event
+        }
+      },
+    })
+  } else {
+    setLogRocketSessionUrl(null)
+  }
+}
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

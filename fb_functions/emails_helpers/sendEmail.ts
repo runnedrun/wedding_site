@@ -1,13 +1,13 @@
 import sgMail from "@sendgrid/mail"
 import * as functions from "firebase-functions"
 
-const hyliteEmailAddress = "info@hylitepeople.com"
+const senderEmailAddress = "hi@xinqing-david.com"
 
 const sgApiKey = () => functions.config().sendgrid?.key
 sgApiKey() && sgMail.setApiKey(sgApiKey())
 
 const bcc =
-  process.env.NODE_ENV === "production" ? hyliteEmailAddress : undefined
+  process.env.NODE_ENV === "production" ? senderEmailAddress : undefined
 
 export enum EmailType {
   testEmail,
@@ -24,7 +24,7 @@ export const sendEmail = (
   data: any
 ) => {
   const msg = {
-    from: "info@hylitepeople.com",
+    from: senderEmailAddress,
     personalizations: [
       {
         to: email,

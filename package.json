@@ -1,5 +1,5 @@
 {
-  "name": "hylite",
+  "name": "xinqing-david-wedding",
   "version": "0.1.0",
   "private": true,
   "engines": {
@@ -11,15 +11,12 @@
     "build": "next build",
     "start": "next start -p 8080",
     "lint": "next lint",
-    "prod-deploy": "gcloud app deploy --project hylite-prod",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
     "build-functions": "tsc --project functions_tsconfig.json",
     "run-action": "act --secret-file .local_github_secrets_file.env --artifact-server-path .artifact_output",
     "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'fb_functions/tests/**/*.ts'",
     "run-migrations": "node ./functions_lib/fb_functions/dataMigrations.js",
     "load-session": "node ./functions_lib/fb_functions/loadSession.js",
-    "emulate": "firebase emulators:start --project demo-hylite"
+    "emulate": "firebase emulators:start --project demo-wedding"
   },
   "dependencies": {
     "@headlessui/react": "^1.4.1",

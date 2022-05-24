@@ -21,12 +21,12 @@ export const initMetaFb = () => {
   if (metaApp) return getFirestore(metaApp)
 
   const metaFirebaseConfig = {
-    apiKey: "AIzaSyAg4dTzGKjMX0sr5FUIrYdqllE8f_NbuWc",
-    authDomain: "hylite-meta.firebaseapp.com",
-    projectId: "hylite-meta",
-    storageBucket: "hylite-meta.appspot.com",
-    messagingSenderId: "4124555951",
-    appId: "1:4124555951:web:704f38ab90240ce390325a",
+    apiKey: "AIzaSyDHDGyL3Cr8-VtfZ8_2qZPtLGsqL79dSEQ",
+    authDomain: "personal-project-meta.firebaseapp.com",
+    projectId: "personal-project-meta",
+    storageBucket: "personal-project-meta.appspot.com",
+    messagingSenderId: "1047972044949",
+    appId: "1:1047972044949:web:3b17f09550eb85533abb9c",
   }
 
   const app = initializeApp(metaFirebaseConfig, "meta")

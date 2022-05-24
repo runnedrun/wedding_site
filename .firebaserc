@@ -1,9 +1,9 @@
 {
   "projects": {
-    "default": "demo-hylite",
-    "staging": "hylite-a6db6",
-    "prod": "hylite-prod",
-    "demo": "demo-hylite"
+    "default": "demo-wedding",
+    "staging": "xinqing-david-wedding-staging",
+    "prod": "xinqing-david-wedding",
+    "demo": "demo-wedding"
   },
   "targets": {}
 }

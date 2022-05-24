@@ -1,12 +1,12 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {    
-    // match /{document=**} {
-    //     allow read, write, create, update: if true;
-    // }
+    match /{document=**} {
+        allow read, write, create, update: if true;
+    }
 
 
-    allow read, write: if false;
+    // allow read, write: if false;
 
     function isCurrentUser(userId) {
       return isAuthenticated() && request.auth.uid == userId;
@@ -26,60 +26,6 @@ service cloud.firestore {
 
     function keyIsTest(docId) {
       return docId.matches('^test-.*')
-    }
-
-    match /privateUser/{userId} {
-      allow read: if isCurrentUser(userId);
-      allow write: if isCurrentUser(userId);
-    }
-
-    match /publicUser/{userId} {
-      allow read: if true;
-      allow write: if isCurrentUser(userId);
-    }
-
-    match /hylite/{hyliteId} {
-      allow read: if true;
-      allow write: if true;
-    }
-
-    match /company/{companyId} {
-      allow read: if true;
-      allow write: if isAuthenticated() || keyIsTest(companyId);
-    }
-
-    match /store/{storeId} {
-      allow read: if true;
-      allow write: if isAuthenticated() || keyIsTest(storeId);
-    }
-
-    match /locationEmployee/{locationEmployeeId} {
-      allow read: if true;
-      allow write: if isAuthenticated() || keyIsTest(locationEmployeeId);
-    }
-
-    match /importCsvJob/{csvJobId} {
-      allow read: if true;
-      allow write: if isAuthenticated() || keyIsTest(csvJobId);
-    }    
-
-    match /importJobChangeRecord/{recordId} {
-      allow read: if true;
-      allow write: if isAuthenticated() || keyIsTest(recordId);
-    }    
-
-    match /emailSendRecord/{recordId} {
-      allow read: if false;
-      allow write: if false;
-    }
-
-    match /dev_SessionRecord/{recordId} {
-      allow read: if true;
-      allow write: if true;
-    }
-    match /warmup/{recordId} {
-      allow read: if true;
-      allow write: if false;
     }
   }
 }

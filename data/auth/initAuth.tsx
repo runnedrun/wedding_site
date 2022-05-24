@@ -39,7 +39,7 @@ const initAuth = () => {
       databaseURL: process.env.FIREBASE_DATABASE_URL,
     },
     cookies: {
-      name: "hylite", // required
+      name: "xinqing-david", // required
       // Keys are required unless you set `signed` to `false`.
       // The keys cannot be accessible on the client side.
       keys: [

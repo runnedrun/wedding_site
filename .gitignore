@@ -58,3 +58,5 @@ migrations_lib
 tmp
 
 gcap_key.json
+# Sentry
+.sentryclirc

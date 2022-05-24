@@ -7,6 +7,7 @@ import { ClickablePillDisplay } from "@/tailwind-components/application_ui/input
 import TextArea from "@/tailwind-components/application_ui/input_groups/TextArea"
 import { buildPrefetchHandler } from "@/views/view_builder/buildPrefetchHandler"
 import { component } from "@/views/view_builder/component"
+import { Head } from "next/document"
 import { useRouter } from "next/router"
 import { tap } from "rxjs"
 useRouter
@@ -136,6 +137,14 @@ const RsvpPage = component(
 
     return (
       <div className="mt-5">
+        <Head>
+          <title>Edit your RSVP for Xinqing and David's Wedding!</title>
+          <meta
+            name="description"
+            content="Our wedding is gonna be awesome, we hope you can come!"
+          />
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
         <div className="mb-5">Your RSVP:</div>
         <div className="mb-5">{dataDisplay}</div>
         <div className="flex flex-wrap">

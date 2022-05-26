@@ -9,11 +9,13 @@ interface PropsTypes {
   items: Record<string, Item> | Array<Item>
   onChange: (newItems: Record<string, Item>) => void
   validate?: (newItem: string) => Boolean
+  placeholder?: string
 }
 
 export const ClickablePillDisplay = ({
   items,
   onChange,
+  placeholder,
   validate,
 }: PropsTypes) => {
   const [itemsState, setItemsState] = useState(items as Record<string, Item>)
@@ -99,7 +101,7 @@ export const ClickablePillDisplay = ({
             }
             setNewItemText(event.target.value)
           }}
-          placeholder="add..."
+          placeholder={placeholder || "add..."}
         ></input>
       </div>
     </div>

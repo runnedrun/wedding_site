@@ -81,6 +81,18 @@ export function component<ParamObsType extends RecordParamObs>(
     : optChildComponent
   const config = isRender(renderOrChildComponent) ? {} : renderOrChildComponent
 
+  const shouldHide = (props: ValueTypeFromParamObs<ParamObsType>) => {
+    const hideWhenIsTrue = config.hideWhen && config.hideWhen(props)
+
+    const shouldHideBasedOnUndefinedValues = (
+      config.hideIfUndefined || []
+    ).some((key) => {
+      return typeof props[key] === "undefined"
+    })
+
+    return hideWhenIsTrue || shouldHideBasedOnUndefinedValues
+  }
+
   const Component = (
     props: PossiblePrefetchData<ValueTypeFromParamObs<ParamObsType>> &
       ComponentInputProps<ParamObsType>
@@ -90,21 +102,31 @@ export function component<ParamObsType extends RecordParamObs>(
     const dataParamObs = useMemo(dataParamObsFn, [])
 
     if (props.prefetch) {
+      const ssrData = config.getPrefetchedData
+        ? config.getPrefetchedData(props.prefetch, props)
+        : {}
+
       const parentInputsAndValues = getInputsAndValuesFromParamObs(
         dataParamObs,
         { props, query },
-        hydrateTimestamps(props.prefetch)
+        { ...hydrateTimestamps(props.prefetch), ...ssrData }
       )
 
       const componentContext = { host: props.context.host }
 
       return (
         <PrefetchContext.Provider value={props.prefetch}>
-          <ChildComponent
-            {...parentInputsAndValues}
-            {...props}
-            _context={componentContext}
-          ></ChildComponent>
+          {shouldHide(
+            parentInputsAndValues as ValueTypeFromParamObs<ParamObsType>
+          ) ? (
+            <span></span>
+          ) : (
+            <ChildComponent
+              {...parentInputsAndValues}
+              {...props}
+              _context={componentContext}
+            ></ChildComponent>
+          )}
         </PrefetchContext.Provider>
       )
     } else {
@@ -126,21 +148,9 @@ export function component<ParamObsType extends RecordParamObs>(
         host: typeof window === "undefined" ? null : window.location.hostname,
       }
 
-      const hideWhenIsTrue =
-        config.hideWhen &&
-        config.hideWhen(
-          parentInputsAndValues as ValueTypeFromParamObs<ParamObsType>
-        )
-
-      const shouldHideBasedOnUndefinedValues = (
-        config.hideIfUndefined || []
-      ).some((key) => {
-        return typeof parentInputsAndValues[key] === "undefined"
-      })
-
-      const shouldHide = hideWhenIsTrue || shouldHideBasedOnUndefinedValues
-
-      return shouldHide ? (
+      return shouldHide(
+        parentInputsAndValues as ValueTypeFromParamObs<ParamObsType>
+      ) ? (
         <span></span>
       ) : (
         <ChildComponent

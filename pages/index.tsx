@@ -1,11 +1,11 @@
 import type { NextPage } from "next"
 import Head from "next/head"
 import Image from "next/image"
-import styles from "../styles/Home.module.css"
 import widePic from "images/xq-david-wide.jpg"
 import yesPic from "images/xq-david-1.jpg"
 import noPic from "images/xq-david-2.jpg"
 import Link from "next/link"
+import randomWords from "random-words"
 
 const Page = () => {
   const opening = (
@@ -40,12 +40,14 @@ const Page = () => {
     </div>
   )
 
+  const rsvpSlug = [randomWords(), randomWords()].join("-")
+
   const rsvpSelectionSection = (
     <div className="mt-5 flex flex-col items-center">
       <div className="text-2xl">We'd love for you to be there!</div>
       <div>Select one of these two options to RSVP:</div>
       <div className="mt-10 mb-10 flex flex-wrap justify-center">
-        <Link href={"/rsvp"}>
+        <Link href={`/rsvp/${rsvpSlug}`}>
           <div className="mb-5 cursor-pointer">
             <Image
               height={400}

@@ -13,7 +13,9 @@ export const adminView = (
     const user = contextWithUser.AuthUser
 
     if (!user?.email?.includes("@xinqing-david.com") && !isDemoMode()) {
-      const redirectPath = redirectWithDestination("/sign_in")({ ctx: context })
+      const redirectPath = redirectWithDestination("/sign_in")({
+        ctx: contextWithUser,
+      })
       return Promise.resolve({
         redirect: {
           destination: redirectPath,

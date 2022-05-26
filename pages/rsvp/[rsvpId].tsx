@@ -1,70 +1,214 @@
 import { docForKey } from "@/data/firebaseObsBuilders/docForKey"
 import { EditingState, fbWriter } from "@/data/firebaseObsBuilders/fbWriter"
+import { readOnlyBoolParam } from "@/data/paramObsBuilders/boolParam"
 import { combine } from "@/data/paramObsBuilders/combine"
 import { stringParam } from "@/data/paramObsBuilders/stringParam"
 import { Button } from "@/tailwind-components/application_ui/Button"
 import { ClickablePillDisplay } from "@/tailwind-components/application_ui/input_groups/ClickablePillDisplay"
+import { InputGroup } from "@/tailwind-components/application_ui/input_groups/InputGroup"
 import TextArea from "@/tailwind-components/application_ui/input_groups/TextArea"
 import { buildPrefetchHandler } from "@/views/view_builder/buildPrefetchHandler"
 import { component } from "@/views/view_builder/component"
-import { Head } from "next/document"
+import Head from "next/head"
 import { useRouter } from "next/router"
-import { tap } from "rxjs"
+import { useEffect } from "react"
+import isEmail from "is-email"
+import { filtered } from "@/data/paramObsBuilders/filtered"
+import { sortBy } from "lodash"
+import { map } from "rxjs"
+import { OtherTimes, RsvpYes } from "@/data/types/RsvpYes"
+import { enumKeys } from "@/helpers/enumKeys"
+import { objKeys } from "@/helpers/objKeys"
 useRouter
 
 type RsvpShellProps = {
   email: React.ReactNode
   names: React.ReactNode
+  otherTimes: React.ReactNode
+  notes: React.ReactNode
   dietaryRestrictions: React.ReactNode
+  previousPersonsAddition: React.ReactNode
+  storyAddition: React.ReactNode
 }
 
-const RsvpShell = ({ email, names, dietaryRestrictions }: RsvpShellProps) => {
+const RsvpShell = ({
+  email,
+  names,
+  otherTimes,
+  dietaryRestrictions,
+  notes,
+  previousPersonsAddition,
+  storyAddition,
+}: RsvpShellProps) => {
   return (
     <div>
-      <div>
-        <div>Your email:</div>
+      <div className=" mb-5 text-lg">
+        Our reception will run from 3PM - 7PM on Saturday August 6th. We're so
+        glad you can make it!
+      </div>
+      <div className="mb-5">
+        <div className="text-xl">Your email:</div>
         {email}
       </div>
-      <div>
-        <div>Whose attending</div>
+      <div className="mb-5">
+        <div className="text-xl">When will you be around?</div>
+        <div className="mb-5 text-sm">
+          In addition to the big party on Satuday we've reserved the following
+          times to hang out with everyone who's visiting. During which other
+          times will you be around and interested in hanging out?
+        </div>
+        <div>{otherTimes}</div>
+      </div>
+      <div className="mb-5">
+        <div className="text-xl">Whose attending</div>
         {names}
       </div>
-      <div>
-        <div>Dietary Restrictions</div>
+      <div className="mb-5">
+        <div className="text-xl">Dietary Restrictions</div>
         {dietaryRestrictions}
       </div>
-      <div></div>
+      <div className="mb-5">
+        <div className="text-xl">Notes</div>
+        {notes}
+      </div>
+      <div>
+        <div className="text-xl">Help us tell our story!</div>
+        <div className="mb-5 text-sm">
+          Each RSVPer has a chance to add to the (mostly made-up) story of how
+          Xinqing and David met. However, you only get to see the previous
+          person's addition to the story! During the party, we'll act out the
+          whole story as part of our ceremony. Add your section to the story
+          below, to complete your RSVP.
+        </div>
+        <div className="mb-5">
+          <div className=" font-bold">Previous Person's Addition: </div>
+          <div>{previousPersonsAddition}</div>
+        </div>
+        <div>
+          <div>Your bit:</div>
+          <div className="">{storyAddition}</div>
+        </div>
+      </div>
     </div>
   )
 }
 const data = combine({
-  writer: fbWriter("rsvpYes", docForKey("rsvpYes", stringParam("rsvpId"))),
+  allRsvps: filtered("rsvpYes").pipe(
+    map((_) =>
+      _.sort((a, b) => b.createdAt?.toMillis() - a.createdAt?.toMillis())
+    )
+  ),
+  writer: fbWriter("rsvpYes", docForKey("rsvpYes", stringParam("rsvpId")), {
+    beforeWrite: ({ data, setError }) => {
+      if (!data.names?.length) {
+        setError("names", "You must enter at least one name")
+      }
+      if (!data.email || !isEmail(data.email)) {
+        setError("email", "you must enter an email")
+      }
+      if (!data.storyAddition) {
+        setError(
+          "storyAddition",
+          "You must add to the story! Don't worry if it's totally silly!"
+        )
+      }
+      return data
+    },
+  }),
+  startEditing: readOnlyBoolParam("startEditing", false),
 })
+
+const storyStart =
+  "Once upon a time Xinqing and David were living happily in Nairobi, not knowing eachother. They liked their lives but they felt like something was missing..."
 
 const RsvpPage = component(
   () => data,
-  { hideWhen: (props) => !props.writer?.currentData },
+  {
+    hideWhen: (props) => {
+      return !props.writer?.currentData || !props.writer?.setEditingState
+    },
+  },
   ({
+    allRsvps,
+    startEditing,
     writer: {
       currentData,
       isEditing,
       setEditingState,
       editingState,
       updateField,
+      errors,
     },
   }) => {
+    // isEditing = true
+    useEffect(() => {
+      if (startEditing) {
+        setEditingState(EditingState.Editing)
+      }
+    }, [startEditing])
     const names = currentData.names || []
+
+    const thisRsvpIndexOrNeg1 = allRsvps.findIndex((rsvp) => {
+      return currentData.createdAt?.toMillis() === rsvp.createdAt?.toMillis()
+    })
+
+    const thisRsvpIndex =
+      thisRsvpIndexOrNeg1 >= 0 ? thisRsvpIndexOrNeg1 : allRsvps.length
+
+    console.log("this rsvps inde", thisRsvpIndex)
+
+    const previousRsvpIndex = thisRsvpIndex - 1
+
+    const previousRsvpsStory =
+      allRsvps[previousRsvpIndex]?.storyAddition || storyStart
+
+    const buildOtherTimesDisplay = (writable: boolean) => {
+      return (
+        <div className="flex">
+          {objKeys(OtherTimes).map((otherTime) => {
+            const label = OtherTimes[otherTime]
+            return (
+              <div className="mr-2" key={label}>
+                <div>{label}</div>
+                <input
+                  disabled={!writable}
+                  type={"checkbox"}
+                  defaultChecked={
+                    currentData.otherTimes && currentData.otherTimes[otherTime]
+                  }
+                  onChange={(e) =>
+                    updateField("otherTimes", {
+                      ...currentData.otherTimes,
+                      [otherTime]: e.target.checked,
+                    })
+                  }
+                ></input>
+              </div>
+            )
+          })}
+        </div>
+      )
+    }
+
     const readableDisplay = (
       <RsvpShell
         email={<div className="mb-5">{currentData.email}</div>}
         names={
-          <div className="flex flex-col">
+          <div className="flex flex-wrap">
             {names.map((name) => {
-              return <div key={name}>{name}</div>
+              return (
+                <div className="mr-1" key={name}>
+                  {name},
+                </div>
+              )
             })}
           </div>
         }
+        otherTimes={buildOtherTimesDisplay(false)}
         dietaryRestrictions={<div>{currentData.dietaryRestrictions}</div>}
+        notes={<div>{currentData.notes}</div>}
+        storyAddition={currentData.storyAddition}
+        previousPersonsAddition={previousRsvpsStory}
       />
     )
 
@@ -76,16 +220,19 @@ const RsvpPage = component(
       <RsvpShell
         email={
           <div className="mb-5">
-            <input
+            <InputGroup
+              className="w-72"
               defaultValue={currentData.email}
               type="text"
-              onChange={(_) => updateField("email", _.target.value)}
-            ></input>
+              onValueChange={(_) => updateField("email", _)}
+              validationError={errors.byKey.email}
+            ></InputGroup>
           </div>
         }
         names={
           <div className="mb-5">
             <ClickablePillDisplay
+              placeholder="Press enter to add..."
               items={pillItems}
               onChange={(allValues) => {
                 updateField(
@@ -94,24 +241,44 @@ const RsvpPage = component(
                 )
               }}
             ></ClickablePillDisplay>
+            <div className=" text-red-400">{errors.byKey.names?.message}</div>
           </div>
         }
         dietaryRestrictions={
           <TextArea
             onChange={(_) => updateField("dietaryRestrictions", _)}
             defaultValue={currentData.dietaryRestrictions}
+            rowCount={2}
+          ></TextArea>
+        }
+        otherTimes={buildOtherTimesDisplay(true)}
+        notes={
+          <TextArea
+            onChange={(_) => updateField("notes", _)}
+            defaultValue={currentData.notes}
+            rowCount={2}
+          ></TextArea>
+        }
+        previousPersonsAddition={previousRsvpsStory}
+        storyAddition={
+          <TextArea
+            onChange={(_) => updateField("storyAddition", _)}
+            defaultValue={currentData.storyAddition}
           ></TextArea>
         }
       />
     )
 
     const dataDisplay = isEditing ? editingDisplay : readableDisplay
+    const buttonClasses = "text-xl"
 
     const editOrSaveButton = isEditing ? (
       <Button
         buttonAssets={{
           text: "Save",
         }}
+        disabled={errors.hasError}
+        className={buttonClasses}
         onClick={() => setEditingState(EditingState.Saved)}
       />
     ) : (
@@ -119,24 +286,27 @@ const RsvpPage = component(
         buttonAssets={{
           text: "Edit",
         }}
+        className={buttonClasses}
         onClick={() => setEditingState(EditingState.Editing)}
       />
     )
 
-    const cancelButton = isEditing ? (
-      <Button
-        buttonAssets={{
-          text: "Cancel",
-        }}
-        onClick={() => setEditingState(EditingState.Cancelled)}
-        secondary
-      />
-    ) : (
-      <div></div>
-    )
+    const cancelButton =
+      isEditing && !startEditing ? (
+        <Button
+          buttonAssets={{
+            text: "Cancel",
+          }}
+          className={buttonClasses}
+          onClick={() => setEditingState(EditingState.Cancelled)}
+          secondary
+        />
+      ) : (
+        <div></div>
+      )
 
     return (
-      <div className="mt-5">
+      <div className="mt-5 flex justify-center">
         <Head>
           <title>Edit your RSVP for Xinqing and David's Wedding!</title>
           <meta
@@ -145,11 +315,13 @@ const RsvpPage = component(
           />
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <div className="mb-5">Your RSVP:</div>
-        <div className="mb-5">{dataDisplay}</div>
-        <div className="flex flex-wrap">
-          {cancelButton}
-          {editOrSaveButton}
+        <div className="flex flex-col items-center pb-10">
+          <div className="mb-5 text-3xl">Your RSVP</div>
+          <div className=" mb-5 max-w-xl">{dataDisplay}</div>
+          <div className="mt-5 flex flex-wrap">
+            {cancelButton}
+            {editOrSaveButton}
+          </div>
         </div>
       </div>
     )

@@ -42,6 +42,7 @@
     "firebase-functions": "^3.14.1",
     "headlessui": "^0.0.0",
     "hotkeys-js": "^3.8.7",
+    "is-email": "^1.0.2",
     "libphonenumber-js": "^1.9.35",
     "lodash": "^4.17.21",
     "logrocket": "^2.1.3",

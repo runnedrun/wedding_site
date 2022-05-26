@@ -261,10 +261,15 @@ const RsvpPage = component(
         }
         previousPersonsAddition={previousRsvpsStory}
         storyAddition={
-          <TextArea
-            onChange={(_) => updateField("storyAddition", _)}
-            defaultValue={currentData.storyAddition}
-          ></TextArea>
+          <div>
+            <div className="text-red-400">
+              {errors.byKey.storyAddition.message}
+            </div>
+            <TextArea
+              onChange={(_) => updateField("storyAddition", _)}
+              defaultValue={currentData.storyAddition}
+            ></TextArea>
+          </div>
         }
       />
     )

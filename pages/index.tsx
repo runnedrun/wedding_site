@@ -48,7 +48,7 @@ const Page = () => {
       <div className="text-2xl">We'd love for you to be there!</div>
       <div>Select one of these two options to RSVP:</div>
       <div className="mt-10 mb-10 flex flex-wrap justify-center">
-        <Link href={`/rsvp/${rsvpSlug}`}>
+        <Link href={`/rsvp/${rsvpSlug}?startEditing=true`}>
           <div className="mb-5 cursor-pointer">
             <Image
               height={400}
@@ -59,7 +59,7 @@ const Page = () => {
           </div>
         </Link>
 
-        <Link href={"/regrets"}>
+        <Link href={"/regrets?startEditing=true"}>
           <div className="cursor-pointer">
             <Image
               height={400}

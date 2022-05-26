@@ -29,6 +29,7 @@ const Page = () => {
           className="text-red-400"
           href="https://www.chinahighlights.com/festivals/double-seventh-festival.htm"
           target="_blank"
+          rel="noreferrer"
         >
           Thursday August 4th
         </a>

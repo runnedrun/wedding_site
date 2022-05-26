@@ -10,11 +10,11 @@ const bcc =
   process.env.NODE_ENV === "production" ? senderEmailAddress : undefined
 
 export enum EmailType {
-  testEmail,
+  rsvpEmail,
 }
 
 const groups = {
-  [EmailType.testEmail]: 16497,
+  [EmailType.rsvpEmail]: 19375,
 }
 
 export const sendEmail = (

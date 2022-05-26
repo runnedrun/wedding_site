@@ -19,12 +19,12 @@ export type RsvpYes = Model<
     storyAddition: string
     notes?: string
     otherTimes: {
-      [OtherTimes.FridayEvening]: boolean
-      [OtherTimes.SundayMorning]: boolean
-      [OtherTimes.SundayAfernoon]: boolean
-      [OtherTimes.MondayMorning]: boolean
-      [OtherTimes.MondayAfternoon]: boolean
-      [OtherTimes.MondayEvening]: boolean
+      [OtherTimes.FridayEvening]?: boolean
+      [OtherTimes.SundayMorning]?: boolean
+      [OtherTimes.SundayAfernoon]?: boolean
+      [OtherTimes.MondayMorning]?: boolean
+      [OtherTimes.MondayAfternoon]?: boolean
+      [OtherTimes.MondayEvening]?: boolean
     }
   }
 >

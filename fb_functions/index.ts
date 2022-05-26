@@ -1,6 +1,6 @@
 import "./fixTsPaths"
 import * as firebase from "firebase-admin/app"
-import { ExampleTrigger } from "./triggers/ExampleTrigger"
+import { SendEmailOnRsvpCreate } from "./triggers/SendEmailOnRsvpCreate"
 
 firebase.initializeApp()
 
@@ -8,4 +8,4 @@ firebase.initializeApp()
 // // https://firebase.google.com/docs/functions/typescript
 //
 
-export { ExampleTrigger }
+export { SendEmailOnRsvpCreate }

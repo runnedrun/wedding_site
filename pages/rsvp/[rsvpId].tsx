@@ -54,14 +54,16 @@ const RsvpShell = ({
       <div className="mb-5">
         <div className="text-xl">When will you be around?</div>
         <div className="mb-5 text-sm">
-          In addition to the big party on Satuday we've reserved the following
-          times to hang out with everyone who's visiting. During which other
-          times will you be around and interested in hanging out?
+          In addition to the big party on Satuday we want to reserve time to
+          spend with all the friends and family that are visiting! We'll reach
+          out later to everyone who confirms they're free to coordinate exact
+          details. For now, check the boxes below to let us know when you'll be
+          available in interested in hanging!
         </div>
         <div>{otherTimes}</div>
       </div>
       <div className="mb-5">
-        <div className="text-xl">Whose attending</div>
+        <div className="text-xl">Who's attending</div>
         {names}
       </div>
       <div className="mb-5">
@@ -156,8 +158,6 @@ const RsvpPage = component(
     const thisRsvpIndex =
       thisRsvpIndexOrNeg1 >= 0 ? thisRsvpIndexOrNeg1 : allRsvps.length
 
-    console.log("this rsvps inde", thisRsvpIndex)
-
     const previousRsvpIndex = thisRsvpIndex - 1
 
     const previousRsvpsStory =
@@ -165,17 +165,20 @@ const RsvpPage = component(
 
     const buildOtherTimesDisplay = (writable: boolean) => {
       return (
-        <div className="flex">
+        <div className="flex flex-col">
           {objKeys(OtherTimes).map((otherTime) => {
             const label = OtherTimes[otherTime]
+            const isSaturday = label === OtherTimes.SaturdayAfternoon
             return (
-              <div className="mr-2" key={label}>
-                <div>{label}</div>
+              <div className="mr-2 flex items-center" key={label}>
+                <div className="mr-4">{label}</div>
                 <input
-                  disabled={!writable}
+                  disabled={isSaturday || !writable}
                   type={"checkbox"}
                   defaultChecked={
-                    currentData.otherTimes && currentData.otherTimes[otherTime]
+                    isSaturday ||
+                    (currentData.otherTimes &&
+                      currentData.otherTimes[otherTime])
                   }
                   onChange={(e) =>
                     updateField("otherTimes", {
@@ -277,39 +280,6 @@ const RsvpPage = component(
 
     const dataDisplay = isEditing ? editingDisplay : readableDisplay
     const buttonClasses = "text-xl"
-
-    const editOrSaveButton = isEditing ? (
-      <Button
-        buttonAssets={{
-          text: "Save",
-        }}
-        disabled={errors.hasError}
-        className={buttonClasses}
-        onClick={() => setEditingState(EditingState.Saved)}
-      />
-    ) : (
-      <Button
-        buttonAssets={{
-          text: "Edit",
-        }}
-        className={buttonClasses}
-        onClick={() => setEditingState(EditingState.Editing)}
-      />
-    )
-
-    const cancelButton =
-      isEditing && !startEditing ? (
-        <Button
-          buttonAssets={{
-            text: "Cancel",
-          }}
-          className={buttonClasses}
-          onClick={() => setEditingState(EditingState.Cancelled)}
-          secondary
-        />
-      ) : (
-        <div></div>
-      )
 
     return (
       <div className="mt-5 flex justify-center">

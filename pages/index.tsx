@@ -6,23 +6,26 @@ import yesPic from "images/xq-david-1.jpg"
 import noPic from "images/xq-david-2.jpg"
 import Link from "next/link"
 import randomWords from "random-words"
+import Banner1 from "images/banner_1.png"
+import Photo1 from "images/photo_1.png"
 
 const Page = () => {
   const opening = (
     <div>
       <div className="flex flex-col items-center">
-        <div className="mt-5 mb-10 p-5">
-          <div className="text-2xl">
+        <div className="mt-5 flex justify-center">
+          <Image src={Banner1}></Image>
+          {/* <div className="text-2xl">
             Xinqing and David are getting married on:
           </div>
-          <div className=" text-5xl">Saturday August 6th!</div>
+          <div className=" text-5xl">Saturday August 6th!</div> */}
         </div>
 
         <Image
-          className="mt-10 mb-10 object-cover"
-          height={500}
-          width={500}
-          src={widePic}
+          className="mt-10 mb-10 object-contain"
+          height={650}
+          width={650}
+          src={Photo1}
         ></Image>
       </div>
 

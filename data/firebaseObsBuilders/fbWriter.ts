@@ -23,7 +23,7 @@ type KeyError = {
   message: string
 }
 
-type ErrorType<DataType extends Record<string, any>> = {
+export type ErrorType<DataType extends Record<string, any>> = {
   byKey?: Partial<Record<keyof DataType, KeyError>>
   overallError?: string
   hasError: boolean

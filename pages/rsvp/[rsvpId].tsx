@@ -19,6 +19,7 @@ import { map } from "rxjs"
 import { OtherTimes, RsvpYes } from "@/data/types/RsvpYes"
 import { enumKeys } from "@/helpers/enumKeys"
 import { objKeys } from "@/helpers/objKeys"
+import { EditingControls } from "@/views/rsvp/EditingControls"
 useRouter
 
 type RsvpShellProps = {
@@ -263,7 +264,7 @@ const RsvpPage = component(
         storyAddition={
           <div>
             <div className="text-red-400">
-              {errors.byKey.storyAddition.message}
+              {errors.byKey.storyAddition?.message}
             </div>
             <TextArea
               onChange={(_) => updateField("storyAddition", _)}
@@ -323,10 +324,12 @@ const RsvpPage = component(
         <div className="flex flex-col items-center pb-10">
           <div className="mb-5 text-3xl">Your RSVP</div>
           <div className=" mb-5 max-w-xl">{dataDisplay}</div>
-          <div className="mt-5 flex flex-wrap">
-            {cancelButton}
-            {editOrSaveButton}
-          </div>
+          <EditingControls
+            setEditingState={setEditingState}
+            isEditing={isEditing}
+            errors={errors}
+            hideCancelButton={startEditing}
+          ></EditingControls>
         </div>
       </div>
     )

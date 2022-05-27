@@ -2,6 +2,12 @@ import sgMail from "@sendgrid/mail"
 import * as functions from "firebase-functions"
 
 const senderEmailAddress = "hi@xinqing-david.com"
+const ccEmailAddresses = [
+  "xinqing.lu.joanne+wedding@gmail.com",
+  "runnedrun+wedding@gmail.com",
+]
+
+const envName = () => functions.config().other?.env
 
 const sgApiKey = () => functions.config().sendgrid?.key
 sgApiKey() && sgMail.setApiKey(sgApiKey())
@@ -23,12 +29,15 @@ export const sendEmail = (
   emailType: EmailType,
   data: any
 ) => {
+  const emailPrefix = envName() === "production" ? "" : "staging-"
+  const emailToSendFrom = `${emailPrefix}-${senderEmailAddress}`
+  const cc = ccEmailAddresses.map((_) => ({ email: _ }))
   const msg = {
-    from: senderEmailAddress,
+    from: emailToSendFrom,
     personalizations: [
       {
         to: email,
-        bcc,
+        cc,
         dynamicTemplateData: data,
         asm: {
           group_id: groups[emailType],

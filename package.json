@@ -71,6 +71,7 @@
     "ts-keycode-enum": "^1.0.6",
     "twilio": "^3.71.3",
     "use-deep-compare-effect": "^1.8.1",
+    "use-local-storage": "^2.3.6",
     "utility-types": "^3.10.0",
     "validator": "^13.7.0"
   },

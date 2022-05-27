@@ -59,7 +59,7 @@ const Page = () => {
           </div>
         </Link>
 
-        <Link href={"/regrets?startEditing=true"}>
+        <Link href={`/regrets/${rsvpSlug}?startEditing=true`}>
           <div className="cursor-pointer">
             <Image
               height={400}

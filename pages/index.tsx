@@ -10,20 +10,23 @@ import randomWords from "random-words"
 const Page = () => {
   const opening = (
     <div>
-      <div className="mt-5 mb-10 p-5">
-        <div className="text-2xl">
-          Xinqing and David are getting married on:
+      <div className="flex flex-col items-center">
+        <div className="mt-5 mb-10 p-5">
+          <div className="text-2xl">
+            Xinqing and David are getting married on:
+          </div>
+          <div className=" text-5xl">Saturday August 6th!</div>
         </div>
-        <div className=" text-5xl">Saturday August 6th!</div>
-      </div>
-      <Image
-        className="mt-10 mb-10 object-cover"
-        height={500}
-        width={500}
-        src={widePic}
-      ></Image>
 
-      <div className="p-5">
+        <Image
+          className="mt-10 mb-10 object-cover"
+          height={500}
+          width={500}
+          src={widePic}
+        ></Image>
+      </div>
+
+      <div className="p-5 text-center">
         Well, actually, we're getting married on{" "}
         <a
           className="text-red-400"
@@ -35,8 +38,19 @@ const Page = () => {
         </a>
         , at the courthouse.
       </div>
-      <div className="p-5 text-3xl">
-        But we're having our party on August 6th!
+      <div className="flex flex-col items-center">
+        <div className="mb-5 text-center text-3xl">
+          But we're having a party on August 6th!
+        </div>
+        <div className=" mr-5 ml-5 max-w-md border-2 border-solid p-2">
+          <div className="text-lg">
+            <span className="font-bold">Time:</span> 3-7PM
+          </div>
+          <div className="text-lg">
+            <span className="font-bold">Venue:</span> David's Parents' house —
+            3507 Foster Ave, Baltimore, MD, 21224
+          </div>
+        </div>
       </div>
     </div>
   )
@@ -83,7 +97,7 @@ const Page = () => {
 
 const Home: NextPage = () => {
   return (
-    <div className="h-full">
+    <div className=" bg-pink-50">
       <Head>
         <title>Xinqing and David's Wedding!</title>
         <meta
@@ -93,6 +107,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Page></Page>
+      <div className="p-5 text-center text-sm">
+        Made with <span className="text-red-400">❤️</span> by Xinqing and David
+      </div>
     </div>
   )
 }

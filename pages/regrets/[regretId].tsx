@@ -101,9 +101,9 @@ const PageView = component(
     )
 
     return (
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center bg-pink-50 pt-5 pb-10">
         <div className="max-w-xl">
-          <div className="mt-5 mb-5 text-center text-2xl">Regrets</div>
+          <div className="mb-5 text-center text-2xl">Regrets</div>
           <div>
             We'll miss you! However, we'll be around the East Coast from 7/30 -
             8/17— perhaps we can meet up outside of the wedding weekend!

@@ -282,7 +282,7 @@ const RsvpPage = component(
     const buttonClasses = "text-xl"
 
     return (
-      <div className="mt-5 flex justify-center">
+      <div className="flex justify-center bg-pink-50 pt-5">
         <Head>
           <title>Edit your RSVP for Xinqing and David's Wedding!</title>
           <meta

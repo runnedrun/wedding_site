@@ -1,9 +1,8 @@
 import type { NextPage } from "next"
 import Head from "next/head"
 import Image from "next/image"
-import widePic from "images/xq-david-wide.jpg"
-import yesPic from "images/xq-david-1.jpg"
-import noPic from "images/xq-david-2.jpg"
+import yesPic from "images/yes.jpeg"
+import noPic from "images/no.jpeg"
 import Link from "next/link"
 import randomWords from "random-words"
 import Banner1 from "images/banner_1.png"
@@ -14,7 +13,7 @@ const Page = () => {
     <div>
       <div className="flex flex-col items-center">
         <div className="mt-5 flex justify-center">
-          <Image src={Banner1}></Image>
+          <Image height={700} objectFit="scale-down" src={Banner1}></Image>
           {/* <div className="text-2xl">
             Xinqing and David are getting married on:
           </div>
@@ -47,7 +46,7 @@ const Page = () => {
         </div>
         <div className=" mr-5 ml-5 max-w-md border-2 border-solid p-2">
           <div className="text-lg">
-            <span className="font-bold">Time:</span> 3-7PM
+            <span className="font-bold">Time:</span> 3-7 PM
           </div>
           <div className="text-lg">
             <span className="font-bold">Venue:</span> David's Parents' house —
@@ -68,8 +67,8 @@ const Page = () => {
         <Link href={`/rsvp/${rsvpSlug}?startEditing=true`}>
           <div className="mb-5 cursor-pointer">
             <Image
-              height={400}
-              width={400}
+              height={300}
+              width={300}
               objectFit="contain"
               src={yesPic}
             ></Image>
@@ -79,8 +78,8 @@ const Page = () => {
         <Link href={`/regrets/${rsvpSlug}?startEditing=true`}>
           <div className="cursor-pointer">
             <Image
-              height={400}
-              width={400}
+              height={300}
+              width={300}
               objectFit="contain"
               src={noPic}
             ></Image>

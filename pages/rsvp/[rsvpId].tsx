@@ -291,7 +291,7 @@ const RsvpPage = component(
           />
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <div className="flex flex-col items-center pb-10">
+        <div className="flex flex-col items-center p-5 pb-10">
           <div className="mb-5 text-3xl">Your RSVP</div>
           <div className=" mb-5 max-w-xl">{dataDisplay}</div>
           <EditingControls

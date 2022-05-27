@@ -102,7 +102,7 @@ const PageView = component(
 
     return (
       <div className="flex flex-col items-center bg-pink-50 pt-5 pb-10">
-        <div className="max-w-xl">
+        <div className="max-w-xl p-5">
           <div className="mb-5 text-center text-2xl">Regrets</div>
           <div>
             We'll miss you! However, we'll be around the East Coast from 7/30 -

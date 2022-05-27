@@ -1,5 +1,6 @@
 import { EditingState, ErrorType } from "@/data/firebaseObsBuilders/fbWriter"
 import { Button } from "@/tailwind-components/application_ui/Button"
+import { toast } from "react-toastify"
 
 type EditingControlsProps = {
   isEditing: boolean
@@ -23,7 +24,10 @@ export const EditingControls = ({
       }}
       disabled={errors.hasError}
       className={buttonClasses}
-      onClick={() => setEditingState(EditingState.Saved)}
+      onClick={() => {
+        toast("RSVP saved! Check your email (maybe in spam).")
+        setEditingState(EditingState.Saved)
+      }}
     />
   ) : (
     <Button

@@ -1,7 +1,7 @@
 import sgMail from "@sendgrid/mail"
 import * as functions from "firebase-functions"
 
-const senderEmailAddress = "hi@xinqing-david.com"
+const senderEmailAddress = "wedding@xinqing-david.com"
 const ccEmailAddresses = [
   "xinqing.lu.joanne+wedding@gmail.com",
   "runnedrun+wedding@gmail.com",
@@ -30,7 +30,7 @@ export const sendEmail = (
   data: any
 ) => {
   const emailPrefix = envName() === "production" ? "" : "staging-"
-  const emailToSendFrom = `${emailPrefix}-${senderEmailAddress}`
+  const emailToSendFrom = `${emailPrefix}${senderEmailAddress}`
   const cc = ccEmailAddresses.map((_) => ({ email: _ }))
   const msg = {
     from: emailToSendFrom,

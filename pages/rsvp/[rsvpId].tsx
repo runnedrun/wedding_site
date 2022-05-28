@@ -104,7 +104,7 @@ const data = combine({
   writer: fbWriter("rsvpYes", docForKey("rsvpYes", stringParam("rsvpId")), {
     beforeWrite: ({ data, setError }) => {
       if (!data.names?.length) {
-        setError("names", "You must enter at least one name")
+        setError("names", "You must enter at least one name.")
       }
       if (!data.email || !isEmail(data.email)) {
         setError("email", "you must enter an email")
@@ -236,7 +236,7 @@ const RsvpPage = component(
         names={
           <div className="mb-5">
             <ClickablePillDisplay
-              placeholder="Press enter to add..."
+              placeholder="Add an attendee..."
               items={pillItems}
               onChange={(allValues) => {
                 updateField(

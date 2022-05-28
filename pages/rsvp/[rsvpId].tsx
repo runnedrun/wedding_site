@@ -58,7 +58,7 @@ const RsvpShell = ({
           spend with all the friends and family that are visiting! We'll reach
           out later to everyone who confirms they're free to coordinate exact
           details. For now, check the boxes below to let us know when you'll be
-          available in interested in hanging!
+          available and interested in hanging out!
         </div>
         <div>{otherTimes}</div>
       </div>
@@ -104,7 +104,7 @@ const data = combine({
   writer: fbWriter("rsvpYes", docForKey("rsvpYes", stringParam("rsvpId")), {
     beforeWrite: ({ data, setError }) => {
       if (!data.names?.length) {
-        setError("names", "You must enter at least one name")
+        setError("names", "You must enter at least one name.")
       }
       if (!data.email || !isEmail(data.email)) {
         setError("email", "you must enter an email")
@@ -122,7 +122,7 @@ const data = combine({
 })
 
 const storyStart =
-  "Once upon a time Xinqing and David were living happily in Nairobi, not knowing eachother. They liked their lives but they felt like something was missing..."
+  "Once upon a time Xinqing and David were living happily in Nairobi, not knowing each other. They liked their lives but they felt like something was missing..."
 
 const RsvpPage = component(
   () => data,
@@ -236,7 +236,7 @@ const RsvpPage = component(
         names={
           <div className="mb-5">
             <ClickablePillDisplay
-              placeholder="Press enter to add..."
+              placeholder="Add an attendee..."
               items={pillItems}
               onChange={(allValues) => {
                 updateField(

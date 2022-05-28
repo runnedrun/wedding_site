@@ -1,7 +1,7 @@
 import { Model } from "../baseTypes/Model"
 
 export enum OtherTimes {
-  FridayEvening = "8/5 Friday | 9PM | Casual Drinks and hang",
+  FridayEvening = "8/5 Friday | 9PM | Casual drinks and hang",
   SaturdayAfternoon = "8/6 Saturday | 3PM - 7PM | Big Party!",
   SundayMorning = "8/7 Sunday | 11AM - 1PM | Brunch",
   SundayAfernoon = "8/7 Sunday | Afternoon | TBD",

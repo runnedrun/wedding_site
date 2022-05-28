@@ -2,7 +2,7 @@ import { objKeys } from "@/helpers/objKeys"
 import { Item } from "@/tailwind-components/application_ui/TypeaheadDropdown"
 import { PlusIcon, XIcon } from "@heroicons/react/solid"
 import classNames from "classnames"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Key } from "ts-keycode-enum"
 
 interface PropsTypes {
@@ -21,8 +21,10 @@ export const ClickablePillDisplay = ({
   const [itemsState, setItemsState] = useState(items as Record<string, Item>)
   const [invalidItem, setInvalidItem] = useState(false)
 
-  const itemsLength = objKeys(itemsState).length
-  const lastItem = itemsState[itemsLength - 1]
+  const itemIdsList = objKeys(itemsState).sort()
+  const itemsLength = itemIdsList.length
+  const lastItemId = itemIdsList[itemsLength - 1]
+  const lastItem = itemsState[lastItemId]
   const latestItemText = lastItem?.text
 
   const callOnChange = (newState) => {
@@ -36,8 +38,8 @@ export const ClickablePillDisplay = ({
     const isValid = validate && validate(newItemText)
     setInvalidItem(!!isValid)
 
-    const itemsList = objKeys(itemsState)
-    const currentId = Math.max(itemsList.length - 1, 0)
+    const currentId = lastItem?.id || "0"
+
     const newState = {
       ...itemsState,
       [currentId]: {
@@ -58,7 +60,7 @@ export const ClickablePillDisplay = ({
       setInvalidItem(false)
     }
 
-    const newId = objKeys(itemsState).length
+    const newId = lastItemId + 1
     const newState = {
       ...itemsState,
       [newId]: {
@@ -76,8 +78,6 @@ export const ClickablePillDisplay = ({
       (event.which === Key.Delete || event.which === Key.Backspace) &&
       !latestItemText
     ) {
-      const allItemIds = objKeys(itemsState)
-      const lastItemId = allItemIds[allItemIds.length - 1]
       if (lastItemId) {
         delete itemsState[lastItemId]
         const newState = { ...itemsState }

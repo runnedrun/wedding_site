@@ -49,7 +49,7 @@ const Page = () => {
             <span className="font-bold">Time:</span> 3-7 PM
           </div>
           <div className="text-lg">
-            <span className="font-bold">Venue:</span> David's Parents' house —
+            <span className="font-bold">Venue:</span> David's Parents' home —
             3507 Foster Ave, Baltimore, MD, 21224
           </div>
         </div>

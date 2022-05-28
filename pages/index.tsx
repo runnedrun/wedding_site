@@ -7,17 +7,18 @@ import Link from "next/link"
 import randomWords from "random-words"
 import Banner1 from "images/banner_1.png"
 import Photo1 from "images/photo_1.png"
+import { useState } from "react"
+import { LoadingSpinner } from "@/tailwind-components/LoadingSpinner"
 
 const Page = () => {
+  const [loadingRsvp, setLoadingRsvp] = useState(false)
+  const [loadingRegret, setLoadingRegret] = useState(false)
+
   const opening = (
     <div>
       <div className="flex flex-col items-center">
         <div className="mt-5 flex justify-center">
           <Image height={700} objectFit="scale-down" src={Banner1}></Image>
-          {/* <div className="text-2xl">
-            Xinqing and David are getting married on:
-          </div>
-          <div className=" text-5xl">Saturday August 6th!</div> */}
         </div>
 
         <Image
@@ -65,24 +66,50 @@ const Page = () => {
       <div>Select one of these two options to RSVP:</div>
       <div className="mt-10 mb-10 flex flex-wrap justify-center">
         <Link href={`/rsvp/${rsvpSlug}?startEditing=true`}>
-          <div className="mb-5 cursor-pointer">
+          <div
+            className="relative mb-5 cursor-pointer"
+            onClick={() => setLoadingRsvp(true)}
+          >
             <Image
               height={300}
               width={300}
               objectFit="contain"
               src={yesPic}
             ></Image>
+            {loadingRsvp ? (
+              <div
+                className="absolute top-1/2 left-1/2"
+                style={{ transform: "translate(-50%, -50%)" }}
+              >
+                <LoadingSpinner></LoadingSpinner>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         </Link>
 
         <Link href={`/regrets/${rsvpSlug}?startEditing=true`}>
-          <div className="cursor-pointer">
+          <div
+            className="cursor-pointer"
+            onClick={() => setLoadingRegret(true)}
+          >
             <Image
               height={300}
               width={300}
               objectFit="contain"
               src={noPic}
             ></Image>
+            {loadingRegret ? (
+              <div
+                className="absolute top-1/2 left-1/2"
+                style={{ transform: "translate(-50%, -50%)" }}
+              >
+                <LoadingSpinner></LoadingSpinner>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         </Link>
       </div>

@@ -217,7 +217,7 @@ const RsvpPage = component(
     )
 
     const pillItems = names.map((_, i) => ({
-      id: i,
+      id: String(i),
       text: _,
     }))
     const editingDisplay = (

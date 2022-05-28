@@ -91,7 +91,7 @@ const Page = () => {
 
         <Link href={`/regrets/${rsvpSlug}?startEditing=true`}>
           <div
-            className="cursor-pointer"
+            className="relative cursor-pointer"
             onClick={() => setLoadingRegret(true)}
           >
             <Image

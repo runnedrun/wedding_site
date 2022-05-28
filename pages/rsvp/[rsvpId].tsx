@@ -183,7 +183,7 @@ const RsvpPage = component(
                   onChange={(e) =>
                     updateField("otherTimes", {
                       ...currentData.otherTimes,
-                      [otherTime]: e.target.checked,
+                      [label]: e.target.checked,
                     })
                   }
                 ></input>

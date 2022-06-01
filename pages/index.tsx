@@ -63,8 +63,11 @@ const Page = () => {
   const rsvpSelectionSection = (
     <div className="mt-5 flex flex-col items-center">
       <div className="text-2xl">We'd love for you to be there!</div>
-      <div>Select one of these two options to RSVP:</div>
-      <div className="mt-10 mb-10 flex flex-wrap justify-center">
+      <div className="p-5">
+        Select one of these two options to RSVP. Please respond by{" "}
+        <b>June 30th!</b>:
+      </div>
+      <div className="mt-5 mb-10 flex flex-wrap justify-center">
         <Link href={`/rsvp/${rsvpSlug}?startEditing=true`}>
           <div
             className="relative mb-5 cursor-pointer"

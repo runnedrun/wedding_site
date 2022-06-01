@@ -5,6 +5,7 @@ const senderEmailAddress = "wedding@xinqing-david.com"
 const ccEmailAddresses = [
   "xinqing.lu.joanne+wedding@gmail.com",
   "runnedrun+wedding@gmail.com",
+  "wsgaynor@verizon.net",
 ]
 
 const envName = () => functions.config().other?.env

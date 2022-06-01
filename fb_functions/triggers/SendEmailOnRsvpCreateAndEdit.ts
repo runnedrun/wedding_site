@@ -15,26 +15,35 @@ const otherTimesOrder = [
   OtherTimes.MondayEvening,
 ]
 
-export const SendEmailOnRsvpCreate = functions.firestore
+export const SendEmailOnRsvpCreateEdit = functions.firestore
   .document("rsvpYes/{docId}")
-  .onCreate(async (change) => {
-    const data = change.data() as RsvpYes
-    const otherTimes = data.otherTimes || {}
+  .onWrite(async (change) => {
+    const previous = change.before.data()
+
+    const type = previous ? "edit" : "create"
+
+    const after = change.after
+    const current = change.after.data() as RsvpYes
+    const otherTimes = current.otherTimes || {}
     const emailData = {
-      names: data.names,
+      names: current.names,
       otherTimes: otherTimesOrder.filter(
         (_) => otherTimes[_] || _ === OtherTimes.SaturdayAfternoon
       ),
-      dietaryRestrictions: data.dietaryRestrictions || "none",
-      notes: data.notes || "none",
-      storyAddition: data.storyAddition,
-      rsvpId: change.id,
+      dietaryRestrictions: current.dietaryRestrictions || "none",
+      notes: current.notes || "none",
+      storyAddition: current.storyAddition,
+      rsvpId: after.id,
+      headerCopy: previous ? "Updated" : "Confirmed",
+      firstSentenceCopy: previous
+        ? "We now have the following RSVP info for you"
+        : "We've confirmed the following RSVP info for you",
     }
 
-    console.log("sending email", data.email, emailData)
+    console.log("sending email", current.email, emailData)
 
     sendEmail(
-      data.email,
+      current.email,
       "d-2cb222708efb4c97ae07abaf6fbbd50b",
       EmailType.rsvpEmail,
       emailData

@@ -98,7 +98,7 @@ const RsvpShell = ({
 const data = combine({
   allRsvps: filtered("rsvpYes").pipe(
     map((_) =>
-      _.sort((a, b) => b.createdAt?.toMillis() - a.createdAt?.toMillis())
+      _.sort((a, b) => a.updatedAt?.toMillis() - b.updatedAt?.toMillis())
     )
   ),
   writer: fbWriter("rsvpYes", docForKey("rsvpYes", stringParam("rsvpId")), {

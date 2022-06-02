@@ -152,7 +152,7 @@ const RsvpPage = component(
     const names = currentData.names || []
 
     const thisRsvpIndexOrNeg1 = allRsvps.findIndex((rsvp) => {
-      return currentData.createdAt?.toMillis() === rsvp.createdAt?.toMillis()
+      return currentData.uid === rsvp.uid
     })
 
     const thisRsvpIndex =

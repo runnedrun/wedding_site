@@ -10,17 +10,14 @@ import TextArea from "@/tailwind-components/application_ui/input_groups/TextArea
 import { buildPrefetchHandler } from "@/views/view_builder/buildPrefetchHandler"
 import { component } from "@/views/view_builder/component"
 import Head from "next/head"
-import { useRouter } from "next/router"
 import { useEffect } from "react"
 import isEmail from "is-email"
 import { filtered } from "@/data/paramObsBuilders/filtered"
-import { sortBy } from "lodash"
 import { map } from "rxjs"
-import { OtherTimes, RsvpYes } from "@/data/types/RsvpYes"
-import { enumKeys } from "@/helpers/enumKeys"
+import { OtherTimes } from "@/data/types/RsvpYes"
 import { objKeys } from "@/helpers/objKeys"
 import { EditingControls } from "@/views/rsvp/EditingControls"
-useRouter
+import ordinal from "ordinal"
 
 type RsvpShellProps = {
   email: React.ReactNode
@@ -30,6 +27,7 @@ type RsvpShellProps = {
   dietaryRestrictions: React.ReactNode
   previousPersonsAddition: React.ReactNode
   storyAddition: React.ReactNode
+  storyPartNumber: number
 }
 
 const RsvpShell = ({
@@ -40,6 +38,7 @@ const RsvpShell = ({
   notes,
   previousPersonsAddition,
   storyAddition,
+  storyPartNumber,
 }: RsvpShellProps) => {
   return (
     <div>
@@ -88,7 +87,9 @@ const RsvpShell = ({
           <div>{previousPersonsAddition}</div>
         </div>
         <div>
-          <div>Your bit:</div>
+          <div className="font-bold">
+            Your bit (you are the {ordinal(storyPartNumber)} story addition):
+          </div>
           <div className="">{storyAddition}</div>
         </div>
       </div>
@@ -212,6 +213,7 @@ const RsvpPage = component(
         dietaryRestrictions={<div>{currentData.dietaryRestrictions}</div>}
         notes={<div>{currentData.notes}</div>}
         storyAddition={currentData.storyAddition}
+        storyPartNumber={thisRsvpIndex + 1}
         previousPersonsAddition={previousRsvpsStory}
       />
     )
@@ -264,6 +266,7 @@ const RsvpPage = component(
           ></TextArea>
         }
         previousPersonsAddition={previousRsvpsStory}
+        storyPartNumber={thisRsvpIndex + 1}
         storyAddition={
           <div>
             <div className="text-red-400">

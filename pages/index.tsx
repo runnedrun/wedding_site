@@ -30,7 +30,16 @@ const Page = () => {
       </div>
 
       <div className="p-5 text-center">
-        Well, actually, we're getting married on{" "}
+        Well, actually,{" "}
+        <a
+          href="https://www.sayname.how/xinqing-lu"
+          className="text-red-400"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Xinqing
+        </a>{" "}
+        and David are getting married on{" "}
         <a
           className="text-red-400"
           href="https://www.chinahighlights.com/festivals/double-seventh-festival.htm"

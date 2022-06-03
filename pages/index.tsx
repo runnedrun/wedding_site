@@ -31,17 +31,17 @@ const Page = () => {
 
       <div className="mb-5 text-center text-xl">
         <div>That's right, </div>
-        <Link href="xinqings_proposal">
+        <a href="xinqings_proposal">
           <div className="cursor-pointer text-red-400">
-            Xinqing Proposed to David
+            Xinqing proposed to David (details here)
           </div>
-        </Link>{" "}
+        </a>{" "}
         AND{" "}
-        <Link href="davids_proposal">
+        <a href="davids_proposal">
           <div className="cursor-pointer text-red-400">
-            David proposed to Xinqing
+            David proposed to Xinqing (details here)
           </div>
-        </Link>
+        </a>
         <div>so now it's time to tie the knot!</div>
       </div>
 

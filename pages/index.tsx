@@ -29,8 +29,23 @@ const Page = () => {
         ></Image>
       </div>
 
+      <div className="mb-5 text-center text-xl">
+        <div>That's right, </div>
+        <Link href="xinqings_proposal">
+          <div className="cursor-pointer text-red-400">
+            Xinqing Proposed to David
+          </div>
+        </Link>{" "}
+        AND{" "}
+        <Link href="davids_proposal">
+          <div className="cursor-pointer text-red-400">
+            David proposed to Xinqing
+          </div>
+        </Link>
+        <div>so now it's time to tie the knot!</div>
+      </div>
+
       <div className="p-5 text-center">
-        Well, actually,{" "}
         <a
           href="https://www.sayname.how/xinqing-lu"
           className="text-red-400"
@@ -39,7 +54,7 @@ const Page = () => {
         >
           Xinqing
         </a>{" "}
-        and David are getting married on{" "}
+        and David are getting legally married on{" "}
         <a
           className="text-red-400"
           href="https://www.chinahighlights.com/festivals/double-seventh-festival.htm"

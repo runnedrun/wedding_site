@@ -74,7 +74,8 @@
     "use-deep-compare-effect": "^1.8.1",
     "use-local-storage": "^2.3.6",
     "utility-types": "^3.10.0",
-    "validator": "^13.7.0"
+    "validator": "^13.7.0",
+    "whatsapp-chat-parser": "^3.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",

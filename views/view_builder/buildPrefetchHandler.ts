@@ -27,9 +27,11 @@ export type PrefetchFnType<ParamObsType extends RecordParamObs> = (
 >
 
 export const buildPrefetchHandler = <ParamObsType extends RecordParamObs>(
-  paramObs: ParamObsType
+  paramObsFb: () => ParamObsType
 ): PrefetchFnType<ParamObsType> => {
   return async (context) => {
+    const paramObs = paramObsFb()
+
     if (await possiblyHandleWarmupRequest(context.query)) {
       return {
         redirect: {

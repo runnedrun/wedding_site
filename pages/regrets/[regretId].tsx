@@ -11,20 +11,22 @@ import { component } from "@/views/view_builder/component"
 import isEmail from "is-email"
 import { useEffect } from "react"
 
-const data = combine({
-  writer: fbWriter("rsvpNo", docForKey("rsvpNo", stringParam("regretId")), {
-    beforeWrite: ({ data, setError }) => {
-      if (!data.email || !isEmail(data.email)) {
-        setError("email", "You must enter an email")
-      }
-      if (!data.name) {
-        setError("name", "Let us know who you are!")
-      }
-      return data
-    },
-  }),
-  startEditing: boolParam("startEditing", false),
-})
+const dataFn = () => {
+  return combine({
+    writer: fbWriter("rsvpNo", docForKey("rsvpNo", stringParam("regretId")), {
+      beforeWrite: ({ data, setError }) => {
+        if (!data.email || !isEmail(data.email)) {
+          setError("email", "You must enter an email")
+        }
+        if (!data.name) {
+          setError("name", "Let us know who you are!")
+        }
+        return data
+      },
+    }),
+    startEditing: boolParam("startEditing", false),
+  })
+}
 
 const Shell = ({ email, notes, name }) => {
   return (
@@ -46,7 +48,7 @@ const Shell = ({ email, notes, name }) => {
 }
 
 const PageView = component(
-  () => data,
+  dataFn,
   {
     hideWhen: (props) => {
       return !props.writer?.currentData || !props.writer?.setEditingState
@@ -127,6 +129,6 @@ const PageView = component(
   }
 )
 
-export const getServerSideProps = buildPrefetchHandler(data)
+export const getServerSideProps = buildPrefetchHandler(dataFn)
 
 export default PageView

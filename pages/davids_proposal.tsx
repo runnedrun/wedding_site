@@ -142,6 +142,6 @@ const DavidsProposal: NextPage = component(getData, ({ messages }) => {
   )
 })
 
-export const getServerSideProps = buildPrefetchHandler(getData())
+export const getServerSideProps = buildPrefetchHandler(getData)
 
 export default DavidsProposal

@@ -96,37 +96,38 @@ const RsvpShell = ({
     </div>
   )
 }
-const data = combine({
-  allRsvps: filtered("rsvpYes").pipe(
-    map((_) =>
-      _.sort((a, b) => a.updatedAt?.toMillis() - b.updatedAt?.toMillis())
-    )
-  ),
-  writer: fbWriter("rsvpYes", docForKey("rsvpYes", stringParam("rsvpId")), {
-    beforeWrite: ({ data, setError }) => {
-      if (!data.names?.length) {
-        setError("names", "You must enter at least one name.")
-      }
-      if (!data.email || !isEmail(data.email)) {
-        setError("email", "you must enter an email")
-      }
-      if (!data.storyAddition) {
-        setError(
-          "storyAddition",
-          "You must add to the story! Don't worry if it's totally silly!"
-        )
-      }
-      return data
-    },
-  }),
-  startEditing: readOnlyBoolParam("startEditing", false),
-})
+const dataFn = () =>
+  combine({
+    allRsvps: filtered("rsvpYes").pipe(
+      map((_) =>
+        _.sort((a, b) => a.updatedAt?.toMillis() - b.updatedAt?.toMillis())
+      )
+    ),
+    writer: fbWriter("rsvpYes", docForKey("rsvpYes", stringParam("rsvpId")), {
+      beforeWrite: ({ data, setError }) => {
+        if (!data.names?.length) {
+          setError("names", "You must enter at least one name.")
+        }
+        if (!data.email || !isEmail(data.email)) {
+          setError("email", "you must enter an email")
+        }
+        if (!data.storyAddition) {
+          setError(
+            "storyAddition",
+            "You must add to the story! Don't worry if it's totally silly!"
+          )
+        }
+        return data
+      },
+    }),
+    startEditing: readOnlyBoolParam("startEditing", false),
+  })
 
 const storyStart =
   "Once upon a time Xinqing and David were living happily in Nairobi, not knowing each other. They liked their lives but they felt like something was missing..."
 
 const RsvpPage = component(
-  () => data,
+  dataFn,
   {
     hideWhen: (props) => {
       return !props.writer?.currentData || !props.writer?.setEditingState
@@ -311,6 +312,6 @@ const RsvpPage = component(
 
 RsvpPage.displayName = "RsvpPage"
 
-export const getServerSideProps = buildPrefetchHandler(data)
+export const getServerSideProps = buildPrefetchHandler(dataFn)
 
 export default RsvpPage

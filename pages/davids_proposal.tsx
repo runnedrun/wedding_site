@@ -27,10 +27,8 @@ const getData = () => {
   const publicUrlObs = getPublicUrlObs(chatLocation)
   const fileText = publicUrlObs.pipe(
     switchMap((url) => {
-      console.log("url", url)
       return from(
         axios.get(url).then((resp) => {
-          console.log("Res", whatsapp)
           return whatsapp
             .parseString(resp.data as string, {
               parseAttachments: true,
@@ -65,7 +63,6 @@ const getData = () => {
 }
 
 const DavidsProposal: NextPage = component(getData, ({ messages }) => {
-  // console.log("asdf", messages)
   const messageEls = (
     <div>
       {messages.map((message, i) => {
@@ -132,8 +129,16 @@ const DavidsProposal: NextPage = component(getData, ({ messages }) => {
           <div className="mb-5 text-xl">
             For David's proposal to Xinqing he worked with 30 of Xinqing's
             friends and family from around the world to prepare a scavenger
-            hunt...in Disney Land! Below is the Whatsapp conversation in which
-            the hunt took place.
+            hunt...in Disney Land!
+          </div>
+          <div className="mb-5 text-xl">
+            Each of the 30 clues came in the form of a video, recorded by a
+            friend. Below is the Whatsapp conversation where all the videos were
+            presented.{" "}
+            <b>
+              Be sure to at least watch the first video, from Xinqing's parents,
+              and the last video, where I actually propose to her.
+            </b>
           </div>
           {messageEls}
         </div>

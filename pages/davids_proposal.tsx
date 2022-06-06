@@ -4,7 +4,7 @@ import { NextPage } from "next"
 import { getStorage, ref } from "firebase/storage"
 import { getDownloadURL } from "rxfire/storage"
 import { init } from "@/data/initFb"
-import { firstValueFrom, from, switchMap } from "rxjs"
+import { firstValueFrom, from, retry, switchMap } from "rxjs"
 import { component } from "@/views/view_builder/component"
 import { obsToNamedParamObs } from "@/data/builders/obsToNamedParamObs"
 import * as whatsapp from "whatsapp-chat-parser"
@@ -54,7 +54,8 @@ const getData = () => {
             })
         })
       )
-    })
+    }),
+    retry(5)
   )
 
   return combine({

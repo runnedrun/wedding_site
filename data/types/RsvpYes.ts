@@ -26,5 +26,6 @@ export type RsvpYes = Model<
       [OtherTimes.MondayAfternoon]?: boolean
       [OtherTimes.MondayEvening]?: boolean
     }
+    hidden: boolean
   }
 >

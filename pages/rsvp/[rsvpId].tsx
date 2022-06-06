@@ -153,17 +153,19 @@ const RsvpPage = component(
     }, [startEditing])
     const names = currentData.names || []
 
-    const thisRsvpIndexOrNeg1 = allRsvps.findIndex((rsvp) => {
+    const hiddenRemoved = allRsvps.filter((_) => !_.hidden)
+
+    const thisRsvpIndexOrNeg1 = hiddenRemoved.findIndex((rsvp) => {
       return currentData.uid === rsvp.uid
     })
 
     const thisRsvpIndex =
-      thisRsvpIndexOrNeg1 >= 0 ? thisRsvpIndexOrNeg1 : allRsvps.length
+      thisRsvpIndexOrNeg1 >= 0 ? thisRsvpIndexOrNeg1 : hiddenRemoved.length
 
     const previousRsvpIndex = thisRsvpIndex - 1
 
     const previousRsvpsStory =
-      allRsvps[previousRsvpIndex]?.storyAddition || storyStart
+      hiddenRemoved[previousRsvpIndex]?.storyAddition || storyStart
 
     const buildOtherTimesDisplay = (writable: boolean) => {
       return (
@@ -283,7 +285,6 @@ const RsvpPage = component(
     )
 
     const dataDisplay = isEditing ? editingDisplay : readableDisplay
-    const buttonClasses = "text-xl"
 
     return (
       <div className="flex justify-center bg-pink-50 pt-5">

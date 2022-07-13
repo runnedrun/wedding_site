@@ -27,23 +27,23 @@ const StoryPage = component(dataFn, ({ allRsvps }) => {
 
   rows.unshift({ storyAddition: storyStart } as RsvpYes)
 
-  console.log("rows", rows)
-
   return (
     <div className="p-10">
       <div className="mb-5 text-2xl">How Xinqing and David met</div>
-      {rows.map((row, i) => {
-        return (
-          <div className="mb-5" key={i}>
-            {row.names && (
-              <div className="mb-2 text-lg font-bold">
-                {row.names.join(", ")}
-              </div>
-            )}
-            <div>{row.storyAddition}</div>
-          </div>
-        )
-      })}
+      {rows
+        .filter((_) => !_.hidden)
+        .map((row, i) => {
+          return (
+            <div className="mb-5" key={i}>
+              {row.names && (
+                <div className="mb-2 text-lg font-bold">
+                  {row.names.join(", ")}
+                </div>
+              )}
+              <div>{row.storyAddition}</div>
+            </div>
+          )
+        })}
     </div>
   )
 })

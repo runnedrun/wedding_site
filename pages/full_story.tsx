@@ -18,7 +18,25 @@ const BothStoriesPage = () => {
           in love:
         </div>
         <div className="mb-10">
-          <div className="mb-5 text-xl">
+          <div>
+            <div className="mb-5 text-xl">The REAL version:</div>
+            <div>
+              <Link href={"https://www.youtube.com/watch?v=gpY-e9gVqTE"}>
+                <div className=" mb-5 cursor-pointer rounded-md border-4 bg-blue-200 p-5">
+                  View Video
+                </div>
+              </Link>
+            </div>
+            <div>
+              <Link href={"/fake_story_script"}>
+                <div className=" cursor-pointer rounded-md border-4 bg-blue-200 p-5">
+                  View Transcript
+                </div>
+              </Link>
+            </div>
+          </div>
+
+          <div className="mb-5 mt-5 text-xl">
             The version written by our wedding guests:
           </div>
           <a
@@ -34,21 +52,6 @@ const BothStoriesPage = () => {
               </div>
             </Link>
           </div>
-        </div>
-
-        <div>
-          <div className="text-xl">The "real" version:</div>
-          <div className=" font-bold">Coming soon!</div>
-          {/* <div>
-          <Link href={"/real_story_script"}>
-            <div>View Transcript</div>
-          </Link>
-        </div>
-        <div>
-          <Link href={"/fake_story_script"}>
-            <div>View Transcript</div>
-          </Link>
-        </div> */}
         </div>
       </div>
     </div>
